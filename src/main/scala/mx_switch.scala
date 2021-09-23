@@ -77,9 +77,9 @@ case class Cylinder(h: Double, d: Double, center: Boolean = false) extends Obj:
     indent + s"cylinder(h = $h, d = $d, center=$center);"
 
 val stem = Color("saddlebrown")(
-  Translate(0, 0, 16)(Cube(7, 5.3, 2, center = true)),
-  Translate(0, 0, 16)(Cube(4.1, 1.17, 7.2, center = true)),
-  Translate(0, 0, 16)(Cube(1.17, 4.1, 7.2, center = true))
+  Translate(0, 0, 6)(Cube(7, 5.3, 2, center = true)),
+  Translate(0, 0, 6)(Cube(4.1, 1.17, 7.2, center = true)),
+  Translate(0, 0, 6)(Cube(1.17, 4.1, 7.2, center = true))
 )
 
 def switchTop(detailed: Boolean = false) = Color("gray")(
@@ -135,6 +135,18 @@ def switchBottom(detailed: Boolean = false) = Color("dimgray")(
   Translate(0, 0, -5 - 3)(Cylinder(d = 4, h = 3))
 )
 
+val pins =
+  Color("gold")(
+    Translate(2 * 1.27, 4 * 1.27, 0)(
+      Translate(0, 0, -5 - 3.3)(Cylinder(d = 1.5, h = 3.3))
+    ),
+    Translate(-3 * 1.27, 2 * 1.27, 0)(
+      Translate(0, 0, -5 - 3.3)(Cylinder(d = 1.5, h = 3.3))
+    )
+  )
+
 object Main extends App {
-  println(switchBottom(detailed = true).toOpenScad(0))
+  List(stem, switchTop(detailed = true), switchBottom(detailed = true), pins).foreach {
+    o => println(o.toOpenScad(0))
+  }
 }
