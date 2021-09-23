@@ -9,3 +9,4 @@ tasks:
 vscode:
   extensions:
     - scalameta.metals
+    - scala-lang.scala
