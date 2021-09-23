@@ -18,8 +18,6 @@ case class Color(name: String)(val children: Obj*) extends ObjWithChildren:
       + renderChildren(indentationLevel)
       + indent + "}"
 
-def color(name: String)(children: Obj*): Obj = Color(name)(children :_*)
-
 case class Translate(x: Double, y: Double, z: Double)(val children: Obj*) extends ObjWithChildren:
   def toOpenScad(indentationLevel: Int = 0): String = 
     val indent = calcIndent(indentationLevel)
@@ -27,22 +25,10 @@ case class Translate(x: Double, y: Double, z: Double)(val children: Obj*) extend
       + renderChildren(indentationLevel)
       + indent + "}"
 
-def translate(x: Double, y: Double, z:Double)(children: Obj*): Obj =
-  Translate(x,y,z)(children :_*)
-
 case class Cube(x: Double, y: Double, z: Double, center: Boolean) extends Obj:
   def toOpenScad(indentationLevel: Int = 0): String = 
     val indent = calcIndent(indentationLevel)
     indent + s"cube([$x, $y, $z], center=$center);"
-
-def cube(x: Double, y: Double, z: Double, center: Boolean = false): Obj =
-  Cube(x,y,z, center)
-
-val stem = color("saddlebrown")(
-  translate(0,0,16)(cube(7, 5.3, 2, center=true)),
-  translate(0,0,16)(cube(4.1, 1.17, 7.2, center=true)),
-  translate(0,0,16)(cube(1.17, 4.1, 7.2, center=true))
-)
 
 case class Difference()(val children : Obj*) extends ObjWithChildren:
   def toOpenScad(indentationLevel: Int = 0): String = 
@@ -50,9 +36,6 @@ case class Difference()(val children : Obj*) extends ObjWithChildren:
     indent + s"difference() { \n" 
       + renderChildren(indentationLevel)
       + indent + "}"
-
-def difference()(children: Obj*): Obj =
-  Difference()(children: _*)
 
 case class Hull()(val children: Obj*) extends ObjWithChildren:
   def toOpenScad(indentationLevel: Int = 0): String = 
@@ -73,7 +56,11 @@ case class LinearExtrude(height: Double)(val children: Obj*) extends ObjWithChil
       + renderChildren(indentationLevel)
       + indent + "}"
 
-
+val stem = color("saddlebrown")(
+  translate(0,0,16)(cube(7, 5.3, 2, center=true)),
+  translate(0,0,16)(cube(4.1, 1.17, 7.2, center=true)),
+  translate(0,0,16)(cube(1.17, 4.1, 7.2, center=true))
+)
 
 val switchTop = color("gray")(
   difference()(
