@@ -1,3 +1,5 @@
+package dsl
+
 trait Obj:
   def toOpenScad(indentationLevel: Int): String
 
@@ -76,3 +78,9 @@ case class Cylinder(h: Double, d: Double, center: Boolean = false) extends Obj:
     val indent = calcIndent(indentationLevel)
     indent + s"cylinder(h = $h, d = $d, center=$center);"
 
+case class Rotate(deg_x: Int, deg_y: Int, deg_z: Int)(val children: Obj*) extends ObjWithChildren:
+  def toOpenScad(indentationLevel: Int = 0): String =
+    val indent = calcIndent(indentationLevel)
+    indent + s"rotate([${deg_x}, ${deg_y}, ${deg_z}]) { \n"
+      + renderChildren(indentationLevel)
+      + indent + "}"

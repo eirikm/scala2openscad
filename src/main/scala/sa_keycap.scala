@@ -137,34 +137,34 @@ def make_squircle(r: Int =1, s: Int=5, steps : Int=40): List[Point] = {
     ++ quadrant.map(p => Point(p.x, -p.y))
 }
 
-def drawLayerProfile(r : , s, steps) = {
+// def drawLayerProfile(r : , s, steps) = {
 
-}
+// }
 
-def cap(steps: Int = 4) = {
-    val s= (3.75, 10)
-    val r = (sa_top_width/2, sa_keycap_width/2)
+// def cap(steps: Int = 4) = {
+//     val s= (3.75, 10)
+//     val r = (sa_top_width/2, sa_keycap_width/2)
 
-    Hull() {
-      0.to(steps).map{i => 
-        val t = i / steps
+//     Hull() {
+//       0.to(steps).map{i => 
+//         val t = i / steps
 
-        Translate(0,0, sa_keycap_height * t)
-          LinearExtrude(height = 0.1) {
-            drawLayerProfile
-          }
-      }
-    }
-    ???
-}
+//         Translate(0,0, sa_keycap_height * t)
+//           LinearExtrude(height = 0.1) {
+//             drawLayerProfile
+//           }
+//       }
+//     }
+//     ???
+// }
 
-object Main extends App {
-  Translate(0,0, mount_height) {
-    Color("whitesmoke") {
-      cap()
-    }
-  }
-  List(stem, switchTop(detailed = true), switchBottom(detailed = true), pins).foreach {
-    o => println(o.toOpenScad(0))
-  }
-}
+// object Main extends App {
+//   Translate(0,0, mount_height) {
+//     Color("whitesmoke") {
+//       cap()
+//     }
+//   }
+//   List(stem, switchTop(detailed = true), switchBottom(detailed = true), pins).foreach {
+//     o => println(o.toOpenScad(0))
+//   }
+// }

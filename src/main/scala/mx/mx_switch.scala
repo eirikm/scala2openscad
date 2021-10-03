@@ -1,3 +1,7 @@
+package mx
+
+import dsl.*
+
 val stem = Color("saddlebrown")(
   Translate(0, 0, 6)(Cube(7, 5.3, 2, center = true)),
   Translate(0, 0, 6)(Cube(4.1, 1.17, 7.2, center = true)),
@@ -67,7 +71,7 @@ val pins =
     )
   )
 
-object Main extends App {
+def mxSwitch = {
   List(stem, switchTop(detailed = true), switchBottom(detailed = true), pins).foreach {
     o => println(o.toOpenScad(0))
   }
