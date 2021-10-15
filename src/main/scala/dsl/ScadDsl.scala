@@ -78,9 +78,26 @@ case class Cylinder(h: Double, d: Double, center: Boolean = false) extends Obj:
     val indent = calcIndent(indentationLevel)
     indent + s"cylinder(h = $h, d = $d, center=$center);"
 
-case class Rotate(deg_x: Int, deg_y: Int, deg_z: Int)(val children: Obj*) extends ObjWithChildren:
+case class Rotate(deg_x: Int, deg_y: Int, deg_z: Int)(val children: Obj*)
+    extends ObjWithChildren:
   def toOpenScad(indentationLevel: Int = 0): String =
     val indent = calcIndent(indentationLevel)
     indent + s"rotate([${deg_x}, ${deg_y}, ${deg_z}]) { \n"
       + renderChildren(indentationLevel)
       + indent + "}"
+
+case class Polygon(points: List[Point], paths: List[List[Int]]) extends Obj:
+  def toOpenScad(indentationLevel: Int = 0): String =
+    val indent = calcIndent(indentationLevel)
+
+    val pointsStr = points.map(_.toString).mkString("[", ", ", "]")
+    val pathsStr = paths
+      .map(p => p.map(_.toString).mkString("[", ", ", "]"))
+      .mkString("[", ", ", "]")
+    indent + s"polygon(points = $pointsStr, paths = $pathsStr);"
+
+case class Point(x: Double, y: Double) {
+  def toNumStr(d: Double) = f"$d%.1f".replace(".0", "")
+
+  override def toString = s"[${toNumStr(x)}, ${toNumStr(y)}]"
+}
